@@ -1,4 +1,4 @@
-jQuery(document).on 'turbolink:load', ->
+jQuery(document).on 'turbolinks:load', ->
   messages = $('#messages')
   if $('#messages').length > 0
     messages_to_bottom = -> messages.scrollTop(messages.prop("scrollHeight"))
@@ -22,12 +22,11 @@ jQuery(document).on 'turbolink:load', ->
       send_message: (message, chat_room_id) ->
         @perform 'send_message', message: message, chat_room_id: chat_room_id  # '@perform' in coffeescript refers to this. => this.perform
 
-
-    $('#new_message').submit(e) ->
-      $this = $(this) # '$this' vs '$(this)' is to distinguish jQuery objects stored in variables from other variables.
-      textarea = $this.find('#message_body')
-      if $.trim(textarea.val()).length > 1
-        App.global_chat.send_message textarea.val(), messages.data('chat-room-id')
-        textarea.val('')
-      e.preventDefault()
-      return false
+  $('#new_message').submit (e) ->
+    $this = $(this) # '$this' vs '$(this)' is to distinguish jQuery objects stored in variables from other variables.
+    textarea = $this.find('#message_body')
+    if $.trim(textarea.val()).length > 1
+      App.global_chat.send_message textarea.val(), messages.data('chat-room-id')
+      textarea.val('')
+    e.preventDefault()
+    return false
